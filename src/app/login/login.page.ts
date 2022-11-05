@@ -13,6 +13,18 @@ export class LoginPage implements OnInit {
     senha: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
   });
 
+  mensagensErro = {
+    email: [
+      {tipo: 'required', aviso: 'Insira um E-mail!'},
+      {tipo: 'email', aviso: 'Insira um E-mail válido!'}
+    ],
+
+    senha: [
+      {tipo: 'required', aviso: 'Insira uma Senha!'},
+      {tipo: 'minLength', aviso: 'A senha deve ter, no mínimo, 6 caracteres!'}
+    ]
+  };
+
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit() {
