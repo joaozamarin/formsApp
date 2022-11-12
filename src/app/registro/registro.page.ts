@@ -8,6 +8,12 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class RegistroPage implements OnInit {
 
+  nomeInput;
+  emailInput;
+  cpfInput;
+  senhaInput;
+  confirmaSenhaInput;
+
   formRegistro = this.formBuilder.group({
     nome: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
     email: ['', Validators.compose([Validators.required ,Validators.email, Validators.minLength(6)])],
@@ -69,6 +75,15 @@ export class RegistroPage implements OnInit {
   get confirmaSenha()
   {
     return this.formRegistro.get('confirmaSenha');
+  }
+
+  async limpar()
+  {
+    this.nomeInput = '';
+    this.emailInput = '';
+    this.cpfInput = '';
+    this.senhaInput = '';
+    this.confirmaSenhaInput = '';
   }
 
   ngOnInit() {
