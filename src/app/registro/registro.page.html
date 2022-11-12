@@ -3,32 +3,38 @@
     <ion-note>Registre-se</ion-note>
   </div>
 
-  <ion-list class="ion-padding">
-    <ion-item class="ion-no-padding">
-      <ion-label position="stacked">Nome</ion-label>
-      <ion-input></ion-input>
-    </ion-item>
+  <form [formGroup]="formRegistro">
+    <ion-list class="ion-padding">
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked">Nome</ion-label>
+        <ion-input formControlName="nome"></ion-input>
+      </ion-item>
+      <ng-container *ngFor="let erro of mensagensErro.nome">
+        <span class="msg-erro" *ngIf="nome.errors?.[erro.tipo] && (nome.dirty || nome.touched)">
+          {{erro.aviso}}
+        </span>
+      </ng-container>
 
-    <ion-item class="ion-no-padding">
-      <ion-label position="stacked">E-mail</ion-label>
-      <ion-input type="email"></ion-input>
-    </ion-item>
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked">E-mail</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+      <ng-container *ngFor="let erro of mensagensErro.email"></ng-container>
 
-    <ion-item class="ion-no-padding">
-      <ion-label position="stacked">Confirmar E-mail</ion-label>
-      <ion-input type="email"></ion-input>
-    </ion-item>
-
-    <ion-item class="ion-no-padding">
-      <ion-label position="stacked">Senha</ion-label>
-      <ion-input type="password"></ion-input>
-    </ion-item>
-
-    <ion-item class="ion-no-padding">
-      <ion-label position="stacked">Confirmar Senha</ion-label>
-      <ion-input type="password"></ion-input>
-    </ion-item>
-  </ion-list>
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked">Confirmar E-mail</ion-label>
+        <ion-input type="email"></ion-input>
+      </ion-item>
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked">Senha</ion-label>
+        <ion-input type="password"></ion-input>
+      </ion-item>
+      <ion-item class="ion-no-padding">
+        <ion-label position="stacked">Confirmar Senha</ion-label>
+        <ion-input type="password"></ion-input>
+      </ion-item>
+    </ion-list>
+  </form>
 
   <ion-grid>
     <ion-row>
