@@ -51,6 +51,26 @@ export class RegistroPage implements OnInit {
     return this.formRegistro.get('nome');
   }
 
+  get email()
+  {
+    return this.formRegistro.get('email');
+  }
+
+  get cpf()
+  {
+    return this.formRegistro.get('cpf');
+  }
+
+  get senha()
+  {
+    return this.formRegistro.get('senha');
+  }
+
+  get confirmaSenha()
+  {
+    return this.formRegistro.get('confirmaSenha');
+  }
+
   ngOnInit() {
   }
 
