@@ -24,10 +24,10 @@
         </ng-container>
       </form>
 
-      <ion-button expand="block">Entrar</ion-button>
+      <ion-button expand="block" (click)="login()">Entrar</ion-button>
       <ion-button expand="block" fill="outline">Recuperar Senha</ion-button>
 
-      <ion-note class="ion-margin-top" color="dark">Não possui uma conta? <span>Registre-se!</span></ion-note>
+      <ion-note class="ion-margin-top" color="dark">Não possui uma conta? <span (click)="telaRegistro()">Registre-se!</span></ion-note>
     </ion-card>
 
   </div>

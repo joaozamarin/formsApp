@@ -11,13 +11,47 @@ export class UsuariosService {
 
   constructor(private storageService: StorageService) { }
 
-  async salvar() {}
+  async login(email: string, senha: string) {
+    this.buscarTodos();
+    let usuario: Usuario;
+    this.listaUsuarios.filter(item => {
+      if (item.email.toLocaleLowerCase() == email.toLocaleLowerCase()) {
+        usuario = item;
+      }
+    });
 
-  async buscarUm() {}
+    if(usuario?.senha === senha) {
+      return usuario;
+    }
+    return null;
+  }
 
-  async buscarTodos() {}
+  async salvar(usuario: Usuario) {
+    this.buscarTodos();
+    this.listaUsuarios[usuario.id] = usuario;
+    this.storageService.set('usuarios', this.listaUsuarios);
+  }
 
-  async deletar() {}
+  async buscarUm(id: number) {
+    this.buscarTodos();
+    return this.listaUsuarios[id];
+  }
+
+  async buscarTodos() {
+    this.listaUsuarios = (await this.storageService.get('usuarios')) as unknown as Usuario[];
+
+    if (!this.listaUsuarios) {
+      return [];
+    }
+
+    return this.listaUsuarios;
+  }
+
+  async deletar(id: number) {
+    this.buscarTodos();
+    this.listaUsuarios.splice(id, 1);
+    this.storageService.set('usuarios', this.listaUsuarios);
+  }
 
   async salvarId(id: number) {
     await this.storageService.set('IdUsuario', id);

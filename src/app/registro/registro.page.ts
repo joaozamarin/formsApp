@@ -1,5 +1,8 @@
+import { UsuariosService } from './../services/usuarios.service';
+import { Usuario } from './../models/Usuario.model';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registro',
@@ -13,6 +16,8 @@ export class RegistroPage implements OnInit {
   cpfInput;
   senhaInput;
   confirmaSenhaInput;
+
+  usuario: Usuario = new Usuario();
 
   formRegistro = this.formBuilder.group({
     nome: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
@@ -50,7 +55,7 @@ export class RegistroPage implements OnInit {
     ]
   };
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private usuarioService: UsuariosService, private route: Router) { }
 
   get nome()
   {
@@ -87,6 +92,28 @@ export class RegistroPage implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  async salvar() {
+    if(this.formRegistro.valid) {
+      this.usuario.nome = this.formRegistro.get('nome').value;
+      this.usuario.email = this.formRegistro.get('email').value;
+      this.usuario.cpf = this.formRegistro.get('cpf').value;
+      this.usuario.senha = this.formRegistro.get('senha').value;
+
+      const id = await this.usuarioService.buscarId() as number;
+      this.usuario.id = id;
+
+      this.usuarioService.salvar(this.usuario);
+
+      this.usuarioService.salvarId(id + 1);
+
+      alert('Usuário Registrado');
+
+      this.route.navigateByUrl('/login');
+    } else{
+      alert('Formulário Inválido!');
+    }
   }
 
 }

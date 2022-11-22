@@ -1,3 +1,6 @@
+import { Usuario } from './../models/Usuario.model';
+import { UsuariosService } from './../services/usuarios.service';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
@@ -25,7 +28,7 @@ export class LoginPage implements OnInit {
     ]
   };
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private route: Router, private usuarioService: UsuariosService) {}
 
   get email()
   {
@@ -38,6 +41,26 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  async login() {
+    if(this.formLogin.valid) {
+      const email = this.formLogin.get('email').value;
+      const senha = this.formLogin.get('senha').value;
+      const usuario: Usuario = await this.usuarioService.login(email, senha) as null as Usuario;
+
+      if(usuario) {
+        this.route.navigateByUrl('/tabs/tab1');
+      } else{
+        alert('E-mail e/ou Senha inválidos!');
+      }
+    } else{
+      alert('Formulário Inválido!');
+    }
+  }
+
+  async telaRegistro() {
+    this.route.navigateByUrl('/registro');
   }
 
 }
