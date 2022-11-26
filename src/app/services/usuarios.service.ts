@@ -12,7 +12,7 @@ export class UsuariosService {
   constructor(private storageService: StorageService) { }
 
   async login(email: string, senha: string) {
-    this.buscarTodos();
+    await this.buscarTodos();
     let usuario: Usuario;
     this.listaUsuarios.filter(item => {
       if (item.email.toLocaleLowerCase() == email.toLocaleLowerCase()) {
@@ -27,28 +27,28 @@ export class UsuariosService {
   }
 
   async salvar(usuario: Usuario) {
-    this.buscarTodos();
+    await this.buscarTodos();
     this.listaUsuarios[usuario.id] = usuario;
     this.storageService.set('usuarios', this.listaUsuarios);
   }
 
   async buscarUm(id: number) {
-    this.buscarTodos();
+    await this.buscarTodos();
     return this.listaUsuarios[id];
   }
 
   async buscarTodos() {
-    this.listaUsuarios = (await this.storageService.get('usuarios')) as unknown as Usuario[];
+    this.listaUsuarios = await this.storageService.get('usuarios') as unknown as Usuario[];
 
     if (!this.listaUsuarios) {
-      return [];
+      this.listaUsuarios = [];
     }
 
     return this.listaUsuarios;
   }
 
   async deletar(id: number) {
-    this.buscarTodos();
+    await this.buscarTodos();
     this.listaUsuarios.splice(id, 1);
     this.storageService.set('usuarios', this.listaUsuarios);
   }
