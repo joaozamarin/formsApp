@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'registro',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
@@ -18,7 +18,12 @@ const routes: Routes = [
   {
     path: 'registro',
     loadChildren: () => import('./registro/registro.module').then( m => m.RegistroPageModule)
+  },
+  {
+    path: 'cadastro-produtos',
+    loadChildren: () => import('./cadastro-produtos/cadastro-produtos.module').then( m => m.CadastroProdutosPageModule)
   }
+
 ];
 @NgModule({
   imports: [
